@@ -1,0 +1,48 @@
+<div class="container">
+  <h1 class="mt-5 mb-4">Lista de Tableros</h1>
+
+  <% @boards.each do |board| %>
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2><%= board.board_name %></h2>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Estados:</h3>
+            <ul>
+              <% board.states.each do |state| %>
+                <li><%= state.state_name %></li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h3>Tareas:</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Descripción</th>
+                  <th>Estado</th>
+                  <th>Informante</th>
+                  <th>Asignado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @tasks.select { |task| task.board_id == board.id }.each do |task| %>
+                  <tr>
+                    <td><%= task.title %></td>
+                    <td><%= task.description %></td>
+                    <td><%= task.status %></td>
+                    <td><%= task.informer.username if task.informer %></td>
+                    <td><%= task.assignee.username if task.assignee %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
